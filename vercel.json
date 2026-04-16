@@ -1,13 +1,17 @@
 {
   "functions": {
-    "chatbot/*.php": {
+    "api/*.php": {
       "runtime": "vercel-php@0.7.1"
     }
   },
   "routes": [
     {
       "src": "/chatbot/message.php",
-      "dest": "/chatbot/message.php"
+      "dest": "/api/message.php"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
