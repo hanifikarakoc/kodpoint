@@ -2,10 +2,10 @@
 require 'ChatGPTClass.php';
 @include 'config.php';
 
-// Check if constant is defined, fallback to sample text or empty string
-$apiKey = defined('OPENAI_API_KEY') ? OPENAI_API_KEY : 'YOUR_API_KEY_HERE';
-$model  = defined('OPENAI_MODEL') ? OPENAI_MODEL : 'gpt-3.5-turbo';
-$sysMsg = defined('CHATBOT_SYSTEM_MSG') ? CHATBOT_SYSTEM_MSG : 'You are a helpful assistance bot.';
+// Prioritize Environment Variables (for Vercel/Production), fallback to config constants
+$apiKey = getenv('OPENAI_API_KEY') ?: (defined('OPENAI_API_KEY') ? OPENAI_API_KEY : 'YOUR_API_KEY_HERE');
+$model  = getenv('OPENAI_MODEL') ?: (defined('OPENAI_MODEL') ? OPENAI_MODEL : 'gpt-3.5-turbo');
+$sysMsg = getenv('CHATBOT_SYSTEM_MSG') ?: (defined('CHATBOT_SYSTEM_MSG') ? CHATBOT_SYSTEM_MSG : 'You are a helpful assistance bot.');
 
 $cumle     = $_POST['soru'];
 $chatGPT = new ChatGPT($apiKey, $model, $sysMsg);
