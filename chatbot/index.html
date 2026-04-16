@@ -1,218 +1,154 @@
 <!DOCTYPE html>
-<html class="no-js" lang="tr">
-
-  <head>
+<html lang="tr">
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Kodpoint | Ai Chat Bot</title>
-    <meta name="description" content="" />
+    <title>Kodpoint | Premium Ai Chat Bot</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/logo_100px.png" />
-
-    <!-- Fonts -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com/" />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Styles -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="assets/css/normalize.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-
-    <!-- Mordernizer -->
-    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
-  </head>
-  <body>
+    <link rel="shortcut icon" href="/chatbot/assets/img/asistan.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/chatbot/assets/css/normalize.css" />
+    <link rel="stylesheet" href="/chatbot/assets/css/style.css" />
+</head>
+<body>
     <div class="wrapper">
-      <div class="mobile-header d-lg-none">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvas"
-          aria-controls="offcanvas"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="row g-0">
-        <div class="col-xl-2 col-lg-2">
-       
-        </div>
-        <div class="col-xl-10 col-lg-9">
-          <div class="chat-wrapper">
-            <div class="chat-body form">
-              <div class="bot-inbox inbox">
-                <div class="wrap">
-                  <div class="icon">
-                    <img src="assets/img/logo_100px.png" alt="arm" />
-                  </div>
-                    <div class="msg-header">
-                      <p id="hello-text" style="color: rgb(0, 0, 0);">
-                        Merhaba, Ben Kodpoint yazılım ekibi tarafından geliştirilen yapay zeka botuyum. istediğin  her şeyi sorabilirsin.
-                      </p>
-                  </div>
+        <div class="chat-wrapper">
+            <header class="chat-header">
+                <div class="logo-container">
+                    <img src="/chatbot/assets/img/asistan.png" alt="Kodpoint AI" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-              </div>
+                <div>
+                    <h1>Kodpoint AI</h1>
+                    <p><i class="fa-solid fa-circle" style="color: #00d1b2; font-size: 8px; margin-right: 5px;"></i> Çevrimiçi</p>
+                </div>
+            </header>
+
+            <div class="chat-body" id="chat-container">
+                <div class="bot-inbox inbox">
+                    <div class="wrap">
+                        <div class="icon">
+                            <img src="/chatbot/assets/img/asistan.png" alt="AI">
+                        </div>
+                        <div class="msg-header">
+                            <p id="hello-text">
+                                Merhaba, Ben Kodpoint ekibi tarafından geliştirilen yapay zeka botuyum. Size nasıl yardımcı olabilirim?
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="chat-bottom">
-              <div class="chat-input">
-                <input
-                  type="text"
-                  id="data"
-                  placeholder="Buraya bir şey yazın..."
-                  required
-                />
-                <button type="" style="color: rgb(58, 229, 98);" type="submit" id="send-btn">
-                  <i class="fa-regular fa-paper-plane"></i>
-                </button>
-              </div>
-              <p style="color: rgb(0, 0, 0); font-weight: bold;">
-                NOT: Bu bot, genel bilgi sağlamak amacıyla yapay zeka tarafından oluşturulmuş otomatik yanıtlar üretir. Bu botun verdiği cevaplardan doğabilecek sonuçlardan geliştirici veya sağlayıcı sorumlu değildir.
-              </p>
+                <div class="chat-input">
+                    <input type="text" id="data" placeholder="Buraya bir şey yazın..." required autocomplete="off" />
+                    <button type="submit" id="send-btn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p class="disclaimer">
+                    NOT: Bu bot yapay zeka tarafından oluşturulmuş otomatik yanıtlar üretir.
+                </p>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <div id="preloader">
-      <div id="loader"></div>
+        <div id="loader"></div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/t.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/chatbot/assets/js/t.min.js"></script>
     <script>
-      $(window).on("load", function () {
-        $("#loader").fadeOut(100, function () {
-          $("#preloader").fadeOut(200);
-          $("body").removeClass("loading");
-        });
-      });
-      $(document).ready(function ($) {
-        // Animation Text
-        $("#hello-text").t({
-          pause_on_tab_switch: false,
-          blink: false,
-          blink_perm: true,
-          speed: 20,
-          speed_vary: false,
-          fin: function () {
-            $(".t-caret").fadeOut();
-          },
-        });
-
-        var i = 0;
-
-        // For Input Enter key
-        $("#data").keyup(function (event) {
-          if (event.keyCode === 13) {
-            $value = $("#data").val();
-            $msg =
-              '<div class="user-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo.png" alt="" /></div><div class="msg-header"><p>' +
-              $value +
-              "</p></div></div></div>";
-            $(".form").append($msg);
-            $("#data").val("");
-
-            $replay =
-              '<div class="bot-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo_100px.png" alt=""></div><div class="msg-header" id="chat-' +
-              i +
-              '"><p>&nbsp;</p></div></div>';
-
-            $(".form").append($replay);
-            $(".form").scrollTop($(".form")[0].scrollHeight);
-
-            $("#chat-" + i + " p").t();
-
-            console.log($value);
-            $.ajax({
-              url: "message.php",
-              type: "POST",
-              data: "soru=" + $value,
-              success: function (result) {
-                $("#chat-" + i).html("<p>" + result + "</p>");
-
-                $("#chat-" + i + " p").t({
-                  pause_on_tab_switch: false,
-                  blink: false,
-                  speed: 20,
-                  blink_perm: true,
-                  speed_vary: false,
-                  fin: function () {
-                    $(".t-caret").fadeOut();
-                  },
-                });
-
-                i++;
-              },
-            });
-          }
-        });
-
-        // For Button
-       
-        $("#send-btn").on("click", function () {
-          $value = $("#data").val();
-            $msg =
-              '<div class="user-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo.png" alt="" /></div><div class="msg-header"><p>' +
-              $value +
-              "</p></div></div></div>";
-            $(".form").append($msg);
-            $("#data").val("");
-
-            $replay =
-              '<div class="bot-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo_100px.png" alt=""></div><div class="msg-header" id="chat-' +
-              i +
-              '"><p>&nbsp;</p></div></div>';
-
-            $(".form").append($replay);
-            $(".form").scrollTop($(".form")[0].scrollHeight);
-
-            $("#chat-" + i + " p").t();
-
-            console.log($value);
-            $.ajax({
-              url: "message.php",
-              type: "POST",
-              data: "soru=" + $value,
-              success: function (result) {
-                $("#chat-" + i).html("<p>" + result + "</p>");
-                $("#chat-" + i + " p").t({
-                  pause_on_tab_switch: false,
-                  blink: false,
-                  speed: 20,
-                  blink_perm: true,
-                  speed_vary: false,
-                  fin: function () {
-                    $(".t-caret").fadeOut();
-                  },
-                });
-
-                i++;
-              },
+        $(window).on("load", function () {
+            $("#loader").fadeOut(100, function () {
+                $("#preloader").fadeOut(200);
             });
         });
-      });
+
+        $(document).ready(function ($) {
+            let messageIndex = 0;
+            const chatContainer = $("#chat-container");
+
+            // Animation for initial message
+            $("#hello-text").t({
+                speed: 20,
+                blink: false,
+                fin: function () {
+                    $(".t-caret").fadeOut();
+                }
+            });
+
+            function sendMessage() {
+                const value = $("#data").val().trim();
+                if (value === "") return;
+
+                // Add User Message
+                const userMsg = `
+                    <div class="user-inbox inbox">
+                        <div class="wrap">
+                            <div class="icon">
+                                <i class="fa-solid fa-user" style="color: #94a3b8; font-size: 20px; margin-top: 7px; margin-left: 8px;"></i>
+                            </div>
+                            <div class="msg-header">
+                                <p>${value}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                
+                chatContainer.append(userMsg);
+                $("#data").val("");
+                chatContainer.scrollTop(chatContainer[0].scrollHeight);
+
+                // Add Bot Loading Placeholder
+                const botId = "chat-" + messageIndex;
+                const botMsg = `
+                    <div class="bot-inbox inbox">
+                        <div class="wrap">
+                            <div class="icon">
+                                <img src="/chatbot/assets/img/asistan.png" alt="AI">
+                            </div>
+                            <div class="msg-header" id="${botId}">
+                                <p><i class="fa-solid fa-ellipsis fa-fade"></i></p>
+                            </div>
+                        </div>
+                    </div>`;
+                
+                chatContainer.append(botMsg);
+                chatContainer.scrollTop(chatContainer[0].scrollHeight);
+
+                $.ajax({
+                    url: "message.php",
+                    type: "POST",
+                    data: { soru: value },
+                    success: function (result) {
+                        $(`#${botId}`).html(`<p>${result}</p>`);
+                        $(`#${botId} p`).t({
+                            speed: 15,
+                            blink: false,
+                            fin: function () {
+                                $(".t-caret").fadeOut();
+                            }
+                        });
+                        messageIndex++;
+                        chatContainer.scrollTop(chatContainer[0].scrollHeight);
+                    },
+                    error: function() {
+                        $(`#${botId}`).html(`<p>Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.</p>`);
+                    }
+                });
+            }
+
+            $("#send-btn").on("click", sendMessage);
+            $("#data").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    sendMessage();
+                }
+            });
+        });
     </script>
-  </body>
-
-  
+</body>
 </html>
