@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Kodpoint | Ai Chat Bot</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/logo_100px.png" />
+
+    <!-- Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/normalize.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <!-- Mordernizer -->
+    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="mobile-header d-lg-none">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvas"
+          aria-controls="offcanvas"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="row g-0">
+        <div class="col-xl-2 col-lg-2">
+       
+        </div>
+        <div class="col-xl-10 col-lg-9">
+          <div class="chat-wrapper">
+            <div class="chat-body form">
+              <div class="bot-inbox inbox">
+                <div class="wrap">
+                  <div class="icon">
+                    <img src="assets/img/logo_100px.png" alt="arm" />
+                  </div>
+                    <div class="msg-header">
+                      <p id="hello-text" style="color: rgb(0, 0, 0);">
+                        Merhaba, Ben Kodpoint yazılım ekibi tarafından geliştirilen yapay zeka botuyum. istediğin  her şeyi sorabilirsin.
+                      </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="chat-bottom">
+              <div class="chat-input">
+                <input
+                  type="text"
+                  id="data"
+                  placeholder="Buraya bir şey yazın..."
+                  required
+                />
+                <button type="" style="color: rgb(58, 229, 98);" type="submit" id="send-btn">
+                  <i class="fa-regular fa-paper-plane"></i>
+                </button>
+              </div>
+              <p style="color: rgb(0, 0, 0); font-weight: bold;">
+                NOT: Bu bot, genel bilgi sağlamak amacıyla yapay zeka tarafından oluşturulmuş otomatik yanıtlar üretir. Bu botun verdiği cevaplardan doğabilecek sonuçlardan geliştirici veya sağlayıcı sorumlu değildir.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="preloader">
+      <div id="loader"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/t.min.js"></script>
+    <script>
+      $(window).on("load", function () {
+        $("#loader").fadeOut(100, function () {
+          $("#preloader").fadeOut(200);
+          $("body").removeClass("loading");
+        });
+      });
+      $(document).ready(function ($) {
+        // Animation Text
+        $("#hello-text").t({
+          pause_on_tab_switch: false,
+          blink: false,
+          blink_perm: true,
+          speed: 20,
+          speed_vary: false,
+          fin: function () {
+            $(".t-caret").fadeOut();
+          },
+        });
+
+        var i = 0;
+
+        // For Input Enter key
+        $("#data").keyup(function (event) {
+          if (event.keyCode === 13) {
+            $value = $("#data").val();
+            $msg =
+              '<div class="user-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo.png" alt="" /></div><div class="msg-header"><p>' +
+              $value +
+              "</p></div></div></div>";
+            $(".form").append($msg);
+            $("#data").val("");
+
+            $replay =
+              '<div class="bot-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo_100px.png" alt=""></div><div class="msg-header" id="chat-' +
+              i +
+              '"><p>&nbsp;</p></div></div>';
+
+            $(".form").append($replay);
+            $(".form").scrollTop($(".form")[0].scrollHeight);
+
+            $("#chat-" + i + " p").t();
+
+            console.log($value);
+            $.ajax({
+              url: "message.php",
+              type: "POST",
+              data: "soru=" + $value,
+              success: function (result) {
+                $("#chat-" + i).html("<p>" + result + "</p>");
+
+                $("#chat-" + i + " p").t({
+                  pause_on_tab_switch: false,
+                  blink: false,
+                  speed: 20,
+                  blink_perm: true,
+                  speed_vary: false,
+                  fin: function () {
+                    $(".t-caret").fadeOut();
+                  },
+                });
+
+                i++;
+              },
+            });
+          }
+        });
+
+        // For Button
+       
+        $("#send-btn").on("click", function () {
+          $value = $("#data").val();
+            $msg =
+              '<div class="user-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo.png" alt="" /></div><div class="msg-header"><p>' +
+              $value +
+              "</p></div></div></div>";
+            $(".form").append($msg);
+            $("#data").val("");
+
+            $replay =
+              '<div class="bot-inbox inbox"><div class="wrap"><div class="icon"><img src="assets/img/logo_100px.png" alt=""></div><div class="msg-header" id="chat-' +
+              i +
+              '"><p>&nbsp;</p></div></div>';
+
+            $(".form").append($replay);
+            $(".form").scrollTop($(".form")[0].scrollHeight);
+
+            $("#chat-" + i + " p").t();
+
+            console.log($value);
+            $.ajax({
+              url: "message.php",
+              type: "POST",
+              data: "soru=" + $value,
+              success: function (result) {
+                $("#chat-" + i).html("<p>" + result + "</p>");
+                $("#chat-" + i + " p").t({
+                  pause_on_tab_switch: false,
+                  blink: false,
+                  speed: 20,
+                  blink_perm: true,
+                  speed_vary: false,
+                  fin: function () {
+                    $(".t-caret").fadeOut();
+                  },
+                });
+
+                i++;
+              },
+            });
+        });
+      });
+    </script>
+  </body>
+
+  
+</html>
