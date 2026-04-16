@@ -1,21 +1,14 @@
 {
+  "cleanUrls": true,
   "functions": {
     "api/*.php": {
       "runtime": "vercel-php@0.7.1"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/chatbot/message.php",
-      "dest": "/api/message.php"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/chatbot/message.php",
+      "destination": "/api/message.php"
     }
   ]
 }
