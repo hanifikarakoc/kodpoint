@@ -1,5 +1,7 @@
 {
+  "version": 2,
   "cleanUrls": true,
+  "trailingSlash": false,
   "functions": {
     "api/*.php": {
       "runtime": "vercel-php@0.7.1"
@@ -9,6 +11,11 @@
     {
       "source": "/chatbot/message.php",
       "destination": "/api/message.php"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
     }
   ]
 }
+
